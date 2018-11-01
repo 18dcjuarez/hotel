@@ -6,3 +6,10 @@
 *.settings.py/
 local_settings.py
 HotelManagement/settings.py
+.idea/workspace.xml
+HotelManagement/__pycache__/settings.cpython-35.pyc
+HotelManagement/__pycache__/urls.cpython-35.pyc
+HotelManagement/__pycache__/wsgi.cpython-35.pyc
+db.sqlite3
+
+
