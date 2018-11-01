@@ -1,3 +1,7 @@
 from django.db import models
 
-# Create your models here.
+
+class Services(models.Model):
+    name = models.IntegerField(null=False)
+    cost = models.FloatField(null=False)
+    status = models.BooleanField(default=False)

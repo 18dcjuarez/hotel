@@ -37,6 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'Guest',
+    'Hotel',
+    'Room',
+    'Services',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -75,8 +80,10 @@ WSGI_APPLICATION = 'HotelManagement.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'hotelmanagement',
+        'USER': 'root',
+        'PASSWORD': 'd4V1d.92',
     }
 }
 
