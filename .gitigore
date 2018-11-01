@@ -3,4 +3,6 @@
 *migrations/
 *__pycache__/
 *.log
-*settings.py
+*.settings.py/
+local_settings.py
+HotelManagement/settings.py
