@@ -37,10 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Hotel',
     'Guest',
+    'Hotel',
     'Room',
-    'Services'
+    'Services',
+    'balance',
+    'reservations',
+    'service_account',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -83,6 +87,7 @@ DATABASES = {
         'NAME': 'Hotel',
         'USER':  'root',
         'PASSWORD': 'password',
+
     }
 }
 
