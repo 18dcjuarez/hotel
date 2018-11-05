@@ -1,0 +1,73 @@
+from rest_framework import serializers
+from .models import Room
+
+
+class RoomSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Room
+        fields = '__all__'
+
+class ListRoomSerializer(serializers.Serializer):
+
+    def listar(self):
+        rooms = Room.objects.all()
+        resp = RoomSerializer(rooms, many=True).data
+        return resp
+
+class CreateRoomSerializer(RoomSerializer):
+
+    number = serializers.IntegerField()
+
+    def validate_number(self, param):
+        print("validate number")
+        if len(Room.objects.filter(number=param)) > 0:
+            raise serializers.ValidationError("Room already exist")
+        else:
+            print("Created room")
+            return param
+
+    def crear(self):
+        print("estoy en crear")
+        print(self.validated_data)
+        room = Room()
+        room.number = self.validated_data.get('number')
+        room.floor = self.validated_data.get('floor')
+        room.types = self.validated_data.get('types')
+        room.status = self.validated_data.get('status')
+        room.beds = self.validated_data.get('beds')
+        room.max_capacity = self.validated_data.get('max_capacity')
+        room.day_cost = self.validated_data.get('day_cost')
+        room.save()
+        return RoomSerializer(room).data
+
+
+class UpdateSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    number = serializers.IntegerField(required=False)
+    floor = serializers.IntegerField(required=False)
+    types = serializers.CharField(required=False)
+    status = serializers.BooleanField(required=False)
+    beds = serializers.IntegerField(required=False)
+    max_capacity = serializers.IntegerField(required=False)
+    day_cost = serializers.IntegerField(required=False)
+
+    def validate_id(self, param):
+        if Room.objects.filter(id=param):
+            return param
+        else:
+            raise serializers.ValidationError("Id no existe")
+
+    def update(self):
+        room = Room.objects.get(pk=self.validated_data.get('id'))
+        room.number = self.validated_data.get('number', room.number)
+        room.floor = self.validated_data.get('floor', room.floor)
+        room.types = self.validated_data.get('types', room.types)
+        room.status = self.validated_data.get('status', room.status)
+        room.beds = self.validated_data.get('beds', room.beds)
+        room.max_capacity = self.validated_data.get('max_capacity', room.max_capacity)
+        room.day_cost = self.validated_data.get('day_cost', room.day_cost)
+        room.save()
+        return RoomSerializer(room).data
+
+
