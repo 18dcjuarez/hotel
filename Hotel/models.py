@@ -6,3 +6,5 @@ class Hotel(models.Model):
     address = models.CharField(null=False, max_length=70)
     rating = models.IntegerField(null=True)
     telephone = models.IntegerField(null=True)
+
+

@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Room
+from Hotel.models import Hotel
 
 
 class RoomSerializer(serializers.ModelSerializer):
@@ -18,14 +19,22 @@ class ListRoomSerializer(serializers.Serializer):
 class CreateRoomSerializer(RoomSerializer):
 
     number = serializers.IntegerField()
+    id_hotel = serializers.IntegerField()
 
     def validate_number(self, param):
         print("validate number")
-        if len(Room.objects.filter(number=param)) > 0:
+        print(self.context['id_hotel'])
+        if len(Room.objects.filter(number=param, id_hotel=self.context['id_hotel'])) > 0:
             raise serializers.ValidationError("Room already exist")
         else:
             print("Created room")
             return param
+
+    def validate_id_hotel(self, param):
+        if Hotel.objects.filter(id=param):
+            return param
+        else:
+            raise serializers.ValidationError('Hotel not exist')
 
     def crear(self):
         print("estoy en crear")
@@ -38,6 +47,8 @@ class CreateRoomSerializer(RoomSerializer):
         room.beds = self.validated_data.get('beds')
         room.max_capacity = self.validated_data.get('max_capacity')
         room.day_cost = self.validated_data.get('day_cost')
+        hotel = Hotel.objects.get(id=self.validated_data.get('id_hotel'))
+        room.id_hotel = hotel
         room.save()
         return RoomSerializer(room).data
 
