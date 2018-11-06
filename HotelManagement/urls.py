@@ -20,10 +20,16 @@ from Hotel.views import HotelViewSet
 from Services.views import ServicesViewSet
 from Guest.views import GuestViewSet
 from Room.views import RoomViewSet
+from balance.views import BalanceViewSet
+from reservations.views import ReservationViewSet
+from service_account.views import ServiceAccountViewSet
 
 router = DefaultRouter()
 router.register(r'hotel', HotelViewSet, base_name='hotel')
 router.register(r'services', ServicesViewSet, base_name='services')
 router.register(r'guest', GuestViewSet, base_name='guest')
 router.register(r'room', RoomViewSet, base_name='room')
+router.register(r'balance', BalanceViewSet, base_name='balance')
+router.register(r'reservation', ReservationViewSet, base_name='reservation')
+router.register(r'service_account', ServiceAccountViewSet, base_name='service_account')
 urlpatterns = router.urls
