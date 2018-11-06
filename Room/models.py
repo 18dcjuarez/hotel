@@ -1,5 +1,5 @@
 from django.db import models
-
+from Hotel.models import Hotel
 
 # Create your models here.
 class Room(models.Model):
@@ -10,6 +10,8 @@ class Room(models.Model):
     beds = models.IntegerField(null=False)
     max_capacity = models.IntegerField(null=False)
     day_cost = models.IntegerField(null=False)
+    id_hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, null=True, default= None)
+
 
 
 

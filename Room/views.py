@@ -8,7 +8,7 @@ from .models import Room
 class RoomViewSet(viewsets.ModelViewSet):
 
     def create(self, request):
-        serializer = CreateRoomSerializer(data=request.data)
+        serializer = CreateRoomSerializer(data=request.data, context=request.data)
         print(serializer)
         serializer.is_valid(raise_exception=True)
         resp = serializer.crear()
