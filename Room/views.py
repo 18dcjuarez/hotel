@@ -14,12 +14,12 @@ class RoomViewSet(viewsets.ModelViewSet):
         resp = serializer.crear()
         return Response(resp)
 
-    def list(self, request):
-        data1 = request.query_params.dict()
-        search = ListRoomSerializer(data=data1)
-        search.is_valid(raise_exception=True)
-        resp = search.listar()
-        return Response(resp)
+    # def list(self, request):
+    #   data1 = request.query_params.dict()
+    #   search = ListRoomSerializer(data=data1)
+    #   search.is_valid(raise_exception=True)
+    #   resp = search.listar()
+    #   return Response(resp)
 
     def partial_update(self, request, pk=None):
         data1 = request.data
@@ -29,5 +29,8 @@ class RoomViewSet(viewsets.ModelViewSet):
         response = room.update()
         return Response(response)
 
-
+    def list(self, request):
+        serializer = ListRoomSerializer()
+        resp = serializer.show()
+        return Response(resp)
 

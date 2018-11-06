@@ -64,3 +64,13 @@ class AddBalanceSerializer(serializers.Serializer):
             return param
         else:
             return serializers.ValidationError("Id no existe")
+
+    def add(self):
+        add_balance = self.initial_data.get('balance')
+        guest = Guest.objects.get(pk=self.validated_data.get('id'))
+        # print("Se va a agregar: ", add_balance)
+        # print("Saldo inicial: ", guest.balance)
+        guest.balance += add_balance
+        # print("Saldo Final: ", guest.balance)
+        guest.save()
+        return GuestSerializer(guest).data

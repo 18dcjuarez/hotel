@@ -10,7 +10,7 @@ class Room(models.Model):
     beds = models.IntegerField(null=False)
     max_capacity = models.IntegerField(null=False)
     day_cost = models.IntegerField(null=False)
-    id_hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, null=True, default= None)
+    id_hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, null=True, default=None, related_name="hotel")
 
 
 

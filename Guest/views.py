@@ -34,13 +34,11 @@ class GuestViewSet(viewsets.ModelViewSet):
     def destroy(self, request, pk=None):
         return Response('Accion no permitida', status=400)
     
-    @action(detail=True, methods=['PUT'])
+    @action(detail=True, methods=['PATCH'])
     def add_balance(self, request, pk=None):
-        print('estoy en add balance')
-        print(request)
         data = request.data
         data['id'] = pk
-        print(data)
         serializer = AddBalanceSerializer(data=data)
         serializer.is_valid(raise_exception=True)
-        return Response('ok')
+        resp = serializer.add()
+        return Response(resp)

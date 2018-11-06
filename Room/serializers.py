@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Room
 from Hotel.models import Hotel
+from Hotel.serializers import HotelSerializer
 
 
 class RoomSerializer(serializers.ModelSerializer):
@@ -12,9 +13,13 @@ class RoomSerializer(serializers.ModelSerializer):
 class ListRoomSerializer(serializers.Serializer):
 
     def listar(self):
-        rooms = Room.objects.all()
-        resp = RoomSerializer(rooms, many=True).data
-        return resp
+       rooms = Room.objects.all()
+       resp = RoomSerializer(rooms, many=True).data
+       return resp
+
+    def show(self):
+        room = Room.objects.all()
+        return RoomInfoSerializer(room, many=True).data
 
 class CreateRoomSerializer(RoomSerializer):
 
@@ -82,3 +87,13 @@ class UpdateSerializer(serializers.Serializer):
         return RoomSerializer(room).data
 
 
+class RoomInfoSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    number = serializers.IntegerField()
+    floor = serializers.IntegerField()
+    types = serializers.CharField()
+    status = serializers.BooleanField()
+    beds = serializers.IntegerField()
+    max_capacity = serializers.IntegerField()
+    day_cost = serializers.IntegerField()
+    id_hotel = HotelSerializer()
