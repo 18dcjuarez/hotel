@@ -5,6 +5,7 @@ from Room.serializers import RoomInfoSerializer
 from Guest.serializers import GuestSerializer
 
 from datetime import date, datetime
+from django.db.models import Q
 
 
 class ReservationSerializer(serializers.ModelSerializer):
@@ -32,6 +33,7 @@ class CreateReservationSerializer(ReservationSerializer):
     deposit = serializers.IntegerField()
 
     def validate_room(self, param):
+
         if Room.objects.filter(id=param):
             return param
         else:
@@ -70,6 +72,18 @@ class CreateReservationSerializer(ReservationSerializer):
         reservation.guest = guest
         reservation.start_date = self.validated_data.get('start_date')
         reservation.end_date = self.validated_data.get('end_date')
+        id = self.validated_data.get('room')
+        in_date = self.validated_data.get('start_date')
+        end_date = self.validated_data.get('end_date')
+        reservation_lock = Reservation.objects.filter(Q(room=id) & (
+                                      (Q(end_date__gte=in_date) & Q(end_date__lte=end_date)) |
+                                      (Q(start_date__lte=in_date) & Q(end_date__gte=end_date)) |
+                                      (Q(start_date__gt=in_date) & Q(start_date__lt=end_date))
+                                      ))
+
+        if reservation_lock:
+            return {'status:': 'reservaciones traslapadas', 'reservaciones': ReservationSerializer(reservation_lock,
+                                                                                                   many=True).data}
         reservation.deposit = self.validated_data.get('deposit')
         reservation.save()
         return ReservationSerializer(reservation).data

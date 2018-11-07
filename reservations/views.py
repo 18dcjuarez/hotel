@@ -27,6 +27,10 @@ class ReservationViewSet(viewsets.ModelViewSet):
     def list(self, request):
         serializer = ListReservationSerializer()
         resp = serializer.show()
+        # data1 = request.query_params.dict()
+        # search = ListReservationSerializer(data=data1)
+        # search.is_valid(raise_exception=True)
+        # resp = search.listar()
         return Response(resp)
 
     def partial_update(self, request, pk=None):
