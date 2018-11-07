@@ -21,6 +21,7 @@ class ListRoomSerializer(serializers.Serializer):
         room = Room.objects.all()
         return RoomInfoSerializer(room, many=True).data
 
+
 class CreateRoomSerializer(RoomSerializer):
 
     number = serializers.IntegerField()

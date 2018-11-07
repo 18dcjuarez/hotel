@@ -1,10 +1,11 @@
 from rest_framework import viewsets
 from .serializers import ReservationSerializer, Reservation, ListReservationSerializer, CreateReservationSerializer
+from rest_framework.response import Response
+
 
 class ReservationViewSet(viewsets.ModelViewSet):
     serializer_class = ReservationSerializer
     queryset = Reservation.objects.all()
-
 
     def create(self, request):
         serializer = CreateReservationSerializer(data=request.data, context=request.data)
@@ -15,7 +16,7 @@ class ReservationViewSet(viewsets.ModelViewSet):
 
     def list(self, request):
         data1 = request.query_params.dict()
-        search = LisReservationSerializer(data=data1)
+        search = ListReservationSerializer(data=data1)
         search.is_valid(raise_exception=True)
         resp = search.listar()
         return Response(resp)
