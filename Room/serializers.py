@@ -10,6 +10,7 @@ class RoomSerializer(serializers.ModelSerializer):
         model = Room
         fields = '__all__'
 
+
 class ListRoomSerializer(serializers.Serializer):
 
     def listar(self):
@@ -20,6 +21,7 @@ class ListRoomSerializer(serializers.Serializer):
     def show(self):
         room = Room.objects.all()
         return RoomInfoSerializer(room, many=True).data
+
 
 class CreateRoomSerializer(RoomSerializer):
 

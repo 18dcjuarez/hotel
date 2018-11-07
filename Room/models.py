@@ -1,7 +1,8 @@
 from django.db import models
+
 from Hotel.models import Hotel
 
-# Create your models here.
+
 class Room(models.Model):
     number = models.IntegerField(null=False)
     floor = models.IntegerField(null=False)
